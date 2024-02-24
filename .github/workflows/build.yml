@@ -22,7 +22,7 @@ jobs:
       - name: Build and pack
         run: dotnet pack YTMDesktopCompanion/YTMDesktopCompanion.csproj -o .
       - uses: google-github-actions/release-please-action@v4
-        id: release-please
+        id: release
         with:
           target-branch: main
       - name: Upload Release Artifacts
