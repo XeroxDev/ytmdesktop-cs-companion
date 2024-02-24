@@ -7,6 +7,7 @@
       "release-type": "simple",
       "draft": false,
       "prerelease": false,
+      "include-component-in-tag": false,
       "extra-files": [
         "YTMDesktopCompanion/YTMDesktopCompanion.csproj"
       ]
