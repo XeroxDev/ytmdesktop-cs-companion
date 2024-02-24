@@ -22,14 +22,18 @@ jobs:
       - name: Build and pack
         run: dotnet pack YTMDesktopCompanion/YTMDesktopCompanion.csproj -o .
       - uses: google-github-actions/release-please-action@v4
-        id: release-please
+        id: release
         with:
           target-branch: main
       - name: Upload Release Artifacts
         if: ${{ steps.release.outputs.release_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.release.outputs.tag_name }} *.nupkg *.snupkg
+        run: |
+          echo "Uploading nupkg file"
+          find . -name "*.nupkg" -exec echo "Uploading {}" \; -exec gh release upload ${{ steps.release.outputs.tag }} {} \;
+          echo "Uploading snupkg file"
+          find . -name "*.snupkg" -exec echo "Uploading {}" \; -exec gh release upload ${{ steps.release.outputs.tag }} {} \;
       - name: Push to nuget
         if: ${{ steps.release.outputs.release_created }}
         shell: bash
