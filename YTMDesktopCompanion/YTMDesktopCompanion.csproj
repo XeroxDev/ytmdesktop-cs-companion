@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>XeroxDev.YTMDesktop.Companion</RootNamespace>
+        <PackageId>XeroxDev.YTMDesktop.Companion</PackageId>
+        <AssemblyName>XeroxDev.YTMDesktop.Companion</AssemblyName>
+        <Title>YTMDesktopCompanion</Title>
+        <Authors>XeroxDev</Authors>
+        <Description>This library will help you communicate with the YTMDesktop Companion Server.</Description>
+        <!-- x-release-please-start-version -->
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <Version>1.0.0</Version>
+        <PackageVersion>1.0.0</PackageVersion>
+        <!-- x-release-please-end -->
+        <PackageProjectUrl>https://github.com/XeroxDev/ytmdesktop-cs-companion</PackageProjectUrl>
+        <Copyright>MIT</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/XeroxDev/ytmdesktop-cs-companion</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>library dotnet csharp ytmdesktop companion-server</PackageTags>
+        <PackageReleaseNotes>
+            Please see the CHANGELOG.md file for release notes. You can find the CHANGELOG.md file at https://github.com/XeroxDev/ytmdesktop-cs-companion/blob/main/CHANGELOG.md
+            For more information and documentation, please visit the project page at https://github.com/XeroxDev/ytmdesktop-cs-companion
+        </PackageReleaseNotes>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+        <NeutralLanguage>en</NeutralLanguage>
+        <AssemblyOriginatorKeyFile>XeroxDev.YTMDesktop.Companion.snk</AssemblyOriginatorKeyFile>
+        <TargetFrameworks>net7.0;net7.0-windows;net8.0;net8.0-windows</TargetFrameworks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NuGet.Versioning" Version="6.9.1"/>
+        <PackageReference Include="SocketIOClient" Version="3.1.1"/>
+        <PackageReference Include="SocketIOClient.Windows7" Version="3.1.1"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Include="../README.md">
+            <Pack>true</Pack>
+            <PackagePath>README.md</PackagePath>
+        </None>
+    </ItemGroup>
+
+</Project>

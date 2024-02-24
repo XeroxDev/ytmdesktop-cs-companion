@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTMDesktopCompanion", "YTMDesktopCompanion\YTMDesktopCompanion.csproj", "{749F5EBA-0CFB-4F3A-84A7-9D0E288620D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTMDesktopCompanion.Example", "YTMDesktopCompanion.Example\YTMDesktopCompanion.Example.csproj", "{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{749F5EBA-0CFB-4F3A-84A7-9D0E288620D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{749F5EBA-0CFB-4F3A-84A7-9D0E288620D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{749F5EBA-0CFB-4F3A-84A7-9D0E288620D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{749F5EBA-0CFB-4F3A-84A7-9D0E288620D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

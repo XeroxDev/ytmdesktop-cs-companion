@@ -1,0 +1,281 @@
+﻿using System.Net.Http.Json;
+using System.Text.Json;
+using XeroxDev.YTMDesktop.Companion.Constants;
+using XeroxDev.YTMDesktop.Companion.Enums;
+using XeroxDev.YTMDesktop.Companion.Exceptions;
+using XeroxDev.YTMDesktop.Companion.Interfaces;
+using XeroxDev.YTMDesktop.Companion.Models.Input;
+using XeroxDev.YTMDesktop.Companion.Models.Input.Auth;
+using XeroxDev.YTMDesktop.Companion.Models.Output;
+using XeroxDev.YTMDesktop.Companion.Models.Output.Auth;
+using XeroxDev.YTMDesktop.Companion.Settings;
+
+namespace XeroxDev.YTMDesktop.Companion.Clients;
+
+/// <summary>
+/// A REST client to communicate with the companion servers REST API
+/// </summary>
+public class RestClient : IGenericClient
+{
+    private readonly HttpClient _httpClient = new();
+
+    /// <summary>
+    /// A REST client to communicate with the companion servers REST API
+    /// </summary>
+    /// <param name="settings">The settings to use for the client</param>
+    public RestClient(ConnectorSettings settings)
+    {
+        Settings = settings;
+    }
+
+    /// <summary>
+    /// The settings to use for the client
+    /// </summary>
+    public ConnectorSettings Settings { get; set; }
+
+    /// <inheritdoc />
+    public void SetAuthToken(string token) => Settings.Token = token;
+
+    /// <summary>
+    /// Get the metadata from the API
+    /// </summary>
+    /// <returns>The metadata from the API</returns>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task<MetadataOutput?> GetMetadata() => await SendGetRequest<MetadataOutput>(Endpoints.Metadata);
+
+    /// <summary>
+    /// Get the state from the API
+    /// </summary>
+    /// <returns>The state from the API</returns>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task<StateOutput?> GetState() => await SendGetRequest<StateOutput>(Endpoints.State, Settings.Token);
+
+    /// <summary>
+    /// Get the playlists from the API
+    /// </summary>
+    /// <returns>The playlists from the API</returns>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task<PlaylistOutput[]> GetPlaylists() => (await SendGetRequest<PlaylistOutput[]>(Endpoints.Playlists, Settings.Token)) ?? Array.Empty<PlaylistOutput>();
+
+    /// <summary>
+    /// Requests a code to exchange for an auth token
+    /// </summary>
+    /// <returns>The code to exchange for an auth token</returns>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task<string?> GetAuthCode() => (
+        await SendPostRequest<RequestCodeOutput, RequestCodeInput>(Endpoints.AuthRequestCode, new RequestCodeInput(Settings.AppId, Settings.AppName, Settings.AppVersion))
+    )?.Code;
+
+    /// <summary>
+    /// Get the authentication token that is required to access the API.<br/>
+    /// <br/>
+    /// You should save this token safely and set it either:<br/>
+    /// 1. in the settings<br/>
+    /// 2. use the <see cref="SetAuthToken"/> method in this class<br/>
+    /// 3. use the <see cref="CompanionConnector.SetAuthToken"/> method in the <see cref="CompanionConnector"/> class
+    /// </summary>
+    /// <param name="code">The code you got from the <see cref="GetAuthCode"/> method</param>
+    /// <returns>The authentication token that is required to access the API</returns>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task<string?> GetAuthToken(string code) => (
+        await SendPostRequest<RequestOutput, RequestInput>(Endpoints.AuthRequest, new RequestInput(Settings.AppId, code))
+    )?.Token;
+
+    #region Commands
+
+    /// <summary>
+    /// Play or pause the current song
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task PlayPause() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.PlayPause), Settings.Token);
+
+    /// <summary>
+    /// Play the current song
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task Play() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.Play), Settings.Token);
+
+    /// <summary>
+    /// Pause the current song
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task Pause() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.Pause), Settings.Token);
+
+    /// <summary>
+    /// Increase the volume
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task VolumeUp() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.VolumeUp), Settings.Token);
+
+    /// <summary>
+    /// Decrease the volume
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task VolumeDown() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.VolumeDown), Settings.Token);
+
+    /// <summary>
+    /// Set the volume
+    /// </summary>
+    /// <param name="volume">The volume to set</param>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task SetVolume(int volume) => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.SetVolume, volume), Settings.Token);
+
+    /// <summary>
+    /// Mute the volume
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task Mute() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.Mute), Settings.Token);
+
+    /// <summary>
+    /// Unmute the volume
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task Unmute() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.Unmute), Settings.Token);
+
+    /// <summary>
+    /// Seek to a specific time in the song
+    /// </summary>
+    /// <param name="time">The time to seek to</param>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task SeekTo(int time) => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.SeekTo, time), Settings.Token);
+
+    /// <summary>
+    /// Skip to the next song
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task Next() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.Next), Settings.Token);
+
+    /// <summary>
+    /// Skip to the previous song
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task Previous() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.Previous), Settings.Token);
+
+    /// <summary>
+    /// Set the repeat mode
+    /// </summary>
+    /// <param name="mode">The mode to set</param>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task SetRepeatMode(ERepeatMode mode) => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.RepeatMode, mode), Settings.Token);
+
+    /// <summary>
+    /// Shuffle the queue
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task Shuffle() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.Shuffle), Settings.Token);
+
+    /// <summary>
+    /// Play a song from the queue
+    /// </summary>
+    /// <param name="index"></param>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task PlayQueueIndex(int index) => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.PlayQueueIndex, index), Settings.Token);
+
+    /// <summary>
+    /// Toggle like the current song
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task ToggleLike() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.ToggleLike), Settings.Token);
+
+    /// <summary>
+    /// Toggle dislike the current song
+    /// </summary>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    public async Task ToggleDislike() => await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.ToggleDislike), Settings.Token);
+
+    #endregion
+
+    /// <summary>
+    /// Send a GET request to the server
+    /// </summary>
+    /// <param name="path">The path to send the request to</param>
+    /// <param name="token">The token to use for the request</param>
+    /// <typeparam name="TResponse">The type of the response</typeparam>
+    /// <returns></returns>
+    /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+    private async Task<TResponse?> SendGetRequest<TResponse>(string path, string? token = null)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, $"http://{Settings.Host}:{Settings.Port}{path}");
+        request.Headers.Add("Accept", "application/json");
+        if (token != null) request.Headers.Add("Authorization", token);
+
+        return await SendRequest<TResponse>(request);
+    }
+
+    private async Task<TResponse?> SendPostRequest<TResponse, TBody>(string path, TBody body, string? token = null)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Post, $"http://{Settings.Host}:{Settings.Port}{path}");
+        request.Headers.Add("Accept", "application/json");
+        if (token != null) request.Headers.Add("Authorization", token);
+        try
+        {
+            request.Content = JsonContent.Create(body);
+        }
+        catch (Exception e)
+        {
+            throw new ApiException("An error occurred while creating the request", e, new ErrorOutput { StatusCode = e.HResult, Error = "Unknown Exception", Message = e.Message });
+        }
+
+        return await SendRequest<TResponse>(request);
+    }
+
+    private async Task<TResponse?> SendRequest<TResponse>(HttpRequestMessage request)
+    {
+        HttpResponseMessage response;
+        try
+        {
+            response = await _httpClient.SendAsync(request);
+        }
+        catch (Exception e)
+        {
+            throw new ApiException("An error occurred while sending the request", e, new ErrorOutput
+            {
+                StatusCode = e.HResult,
+                Error = "Unknown Exception",
+                Message = e.Message
+            });
+        }
+
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = JsonSerializer.Deserialize<ErrorOutput>(content);
+            if (error == null)
+            {
+                throw new ApiException(new ErrorOutput()
+                {
+                    StatusCode = (int)response.StatusCode,
+                    Error = response.ReasonPhrase ?? "Unknown Error",
+                    Message = response.Content.ReadAsStringAsync().Result
+                });
+            }
+
+            error.StatusCode = (int)response.StatusCode;
+
+            throw new ApiException(error);
+        }
+
+        // Server still sends for some endpoints no content, so we have to check if the content is empty and return null if it is
+        if (string.IsNullOrWhiteSpace(content))
+        {
+            return default;
+        }
+
+        // Try parsing the response to ErrorOutput, if it's successful, throw an ApiException
+        try
+        {
+            var errorOutput = JsonSerializer.Deserialize<ErrorOutput>(content);
+            if (errorOutput is not null && errorOutput.Error is not null && errorOutput.Message is not null && errorOutput.StatusCode is not null && errorOutput.Code is not null)
+            {
+                throw new ApiException(errorOutput);
+            }
+        }
+        catch (Exception e)
+        {
+            if (e is ApiException) throw;
+        }
+
+        return JsonSerializer.Deserialize<TResponse>(content);
+    }
+}

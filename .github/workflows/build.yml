@@ -1,0 +1,68 @@
+﻿name: release-please
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  pages: write
+  id-token: write
+
+jobs:
+  release-please:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dotnet Setup
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
+      - name: Build and pack
+        run: dotnet pack YTMDesktopCompanion/YTMDesktopCompanion.csproj -o .
+      - uses: google-github-actions/release-please-action@v4
+        id: release-please
+        with:
+          target-branch: main
+      - name: Upload Release Artifacts
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ steps.release.outputs.tag_name }} *.nupkg *.snupkg
+      - name: Push to nuget
+        if: ${{ steps.release.outputs.release_created }}
+        shell: bash
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        run: dotnet nuget push "*.nupkg" -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
+  
+  publish-docs:
+    needs: release-please
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Dotnet Setup
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
+      - name: Copy README and add layout at the top
+        run: |
+          cp README.md index.md
+          sed -i '1s/^/---\nlayout: landing\n---\n/' index.md
+
+      - run: dotnet tool update -g docfx
+      - run: docfx docfx.json
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '_site'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
