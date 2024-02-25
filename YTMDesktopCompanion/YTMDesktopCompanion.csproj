@@ -29,19 +29,17 @@
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
         <NeutralLanguage>en</NeutralLanguage>
         <AssemblyOriginatorKeyFile>XeroxDev.YTMDesktop.Companion.snk</AssemblyOriginatorKeyFile>
-        <TargetFrameworks>net6.0;net6.0-windows;net7.0;net7.0-windows;net8.0;net8.0-windows;netstandard2.0;netstandard2.1;net472;net48;net481</TargetFrameworks>
+        <TargetFrameworks>net6.0;netstandard2.0;net472</TargetFrameworks>
         <LangVersion>7.3</LangVersion>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-        <ProjectGuid>749F5EBA-0CFB-4F3A-84A7-9D0E288620D2</ProjectGuid>
+        <ProjectGuid>{749F5EBA-0CFB-4F3A-84A7-9D0E288620D2}</ProjectGuid>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NuGet.Versioning" Version="6.9.1"/>
-        <PackageReference Include="SocketIOClient" Version="3.1.1"/>
-        <PackageReference Include="SocketIOClient.Windows7" Version="3.1.1"/>
-        <PackageReference Include="System.Net.Http" Version="4.3.4"/>
-        <PackageReference Include="System.Net.Http.Json" Version="8.0.0"/>
+        <PackageReference Include="H.Socket.IO" Version="1.2.*"/>
+        <PackageReference Include="System.Text.Json" Version="8.0.*"/>
     </ItemGroup>
 
     <ItemGroup>

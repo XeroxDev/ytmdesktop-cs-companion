@@ -25,8 +25,6 @@
 using System;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using NuGet.Versioning;
-using XeroxDev.YTMDesktop.Companion.Converter;
 
 #endregion
 
@@ -52,7 +50,7 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Input.Auth
         /// <param name="appVersion">The version of your app. Must be semantic versioning compatible.</param>
         /// <exception cref="ArgumentNullException">Thrown when the app id or app name is null or empty.</exception>
         /// <exception cref="ArgumentException">Thrown when the app id is not valid or the app name is too short or too long.</exception>
-        public RequestCodeInput(string appId, string appName, SemanticVersion appVersion)
+        public RequestCodeInput(string appId, string appName, string appVersion)
         {
             AppId = appId;
             AppName = appName;
@@ -102,7 +100,6 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Input.Auth
         /// </summary>
         [JsonPropertyName("appVersion")]
         [JsonRequired]
-        [JsonConverter(typeof(SemanticVersionJsonConverter))]
-        public SemanticVersion AppVersion { get; set; }
+        public string AppVersion { get; set; }
     }
 }

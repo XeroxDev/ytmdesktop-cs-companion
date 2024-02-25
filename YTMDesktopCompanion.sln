@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTMDesktopCompanion", "YTMD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTMDesktopCompanion.Example", "YTMDesktopCompanion.Example\YTMDesktopCompanion.Example.csproj", "{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTMDesktopCompanion.net472", "YTMDesktopCompanion.net472\YTMDesktopCompanion.net472.csproj", "{6E7924FB-18BD-43AA-858C-358E29789E2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTMDesktopCompanion.net6", "YTMDesktopCompanion.net6\YTMDesktopCompanion.net6.csproj", "{C6B13466-607A-4AA7-ABFC-FB9174E78C4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49D7BB5B-C74F-40C2-9E62-C676A7E4FA3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E7924FB-18BD-43AA-858C-358E29789E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E7924FB-18BD-43AA-858C-358E29789E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E7924FB-18BD-43AA-858C-358E29789E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E7924FB-18BD-43AA-858C-358E29789E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6B13466-607A-4AA7-ABFC-FB9174E78C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6B13466-607A-4AA7-ABFC-FB9174E78C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6B13466-607A-4AA7-ABFC-FB9174E78C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6B13466-607A-4AA7-ABFC-FB9174E78C4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

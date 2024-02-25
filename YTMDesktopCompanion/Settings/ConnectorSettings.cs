@@ -24,7 +24,6 @@
 
 using System;
 using System.Text.RegularExpressions;
-using NuGet.Versioning;
 
 #endregion
 
@@ -53,7 +52,7 @@ namespace XeroxDev.YTMDesktop.Companion.Settings
         /// <param name="token">The token to connect to the server (if available).</param>
         /// <exception cref="ArgumentNullException">Thrown when the host, app id or app name is null or empty.</exception>
         /// <exception cref="ArgumentException">Thrown when the host contains a protocol, a port, the app id is not valid or the app name is too short or too long.</exception>
-        public ConnectorSettings(string host, int port, string appId, string appName, SemanticVersion appVersion, string token = null)
+        public ConnectorSettings(string host, int port, string appId, string appName, string appVersion, string token = null)
         {
             Host = host;
             AppId = appId;
@@ -126,6 +125,6 @@ namespace XeroxDev.YTMDesktop.Companion.Settings
         /// <summary>
         ///     The version of your app. Must be semantic versioning compatible.
         /// </summary>
-        public SemanticVersion AppVersion { get; set; }
+        public string AppVersion { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿// This file is part of the YTMDesktopCompanion.Example project.
+﻿// This file is part of the YTMDesktopCompanion.net6 project.
 // 
 // Copyright (c) 2024 Dominic Ris
 // 
@@ -34,7 +34,7 @@ using XeroxDev.YTMDesktop.Companion.Settings;
 // Set YOUR version (or fetch them from anywhere)
 var version = "1.0.0";
 
-// Check if file ".token" exists (i store it for this in the temp folder)
+// Check if file ".token" exists
 var tokenPath = Path.Combine(Path.GetTempPath(), "ytmd-csharp-lib-test.token");
 if (!File.Exists(tokenPath))
 {

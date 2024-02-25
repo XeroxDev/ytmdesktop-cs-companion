@@ -24,7 +24,6 @@
 
 using System;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 using XeroxDev.YTMDesktop.Companion.Constants;
@@ -159,7 +158,7 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
                 if (token != null) request.Headers.Add("Authorization", token);
                 try
                 {
-                    request.Content = JsonContent.Create(body);
+                    request.Content = new StringContent(JsonSerializer.Serialize(body), System.Text.Encoding.UTF8, "application/json");
                 }
                 catch (Exception e)
                 {

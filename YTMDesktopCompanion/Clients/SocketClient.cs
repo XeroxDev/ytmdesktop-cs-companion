@@ -24,10 +24,7 @@
 
 using System;
 using System.Threading.Tasks;
-using SocketIOClient;
-using SocketIOClient.Transport;
-using SocketIOClient.Windows7;
-using XeroxDev.YTMDesktop.Companion.Constants;
+using H.Socket.IO;
 using XeroxDev.YTMDesktop.Companion.Enums;
 using XeroxDev.YTMDesktop.Companion.Interfaces;
 using XeroxDev.YTMDesktop.Companion.Models.Output;
@@ -44,7 +41,7 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
         /// <summary>
         ///     The socket client
         /// </summary>
-        private SocketIOClient.SocketIO _socket;
+        private SocketIoClient _client;
 
         public SocketClient(ConnectorSettings settings)
         {
@@ -74,7 +71,7 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
 
                 _settings = value;
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                if (reconnect && _socket != null) Connect();
+                if (reconnect && _client != null) Connect();
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
         }
@@ -94,9 +91,9 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
         ///     Useful for custom things that are not implemented in the library yet.
         /// </summary>
         /// <returns>The socket object</returns>
-        public SocketIOClient.SocketIO GetSocket()
+        public SocketIoClient GetClient()
         {
-            return _socket;
+            return _client;
         }
 
         /// <summary>
@@ -106,32 +103,31 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
         {
             try
             {
-                if (_socket != null)
+                if (_client != null)
                 {
-                    await _socket.DisconnectAsync();
-                    _socket.Dispose();
-                    _socket = null;
+                    await _client.DisconnectAsync();
+                    _client.Dispose();
+                    _client = null;
                     OnConnectionChange(this, ESocketState.Disconnected);
                 }
 
                 OnConnectionChange(this, ESocketState.Connecting);
 
-                _socket = new SocketIOClient.SocketIO($"http://{Settings.Host}:{Settings.Port}{Endpoints.Realtime}", new SocketIOOptions
-                {
-                    Transport = TransportProtocol.WebSocket,
-                    Auth = Settings.Token
-                });
-                _socket.ClientWebSocketProvider = () => new SystemNetWebSocketsClientWebSocket();
+                _client = new SocketIoClient();
 
-                _socket.OnConnected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Connected);
-                _socket.OnDisconnected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Disconnected);
-                _socket.OnError += (sender, args) => OnError(sender ?? this, new Exception(args));
-                _socket.OnReconnectError += (sender, args) => OnError(sender ?? this, args);
-                _socket.OnReconnected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Connected);
-                _socket.OnReconnectAttempt += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Connecting);
-                _socket.On("state-update", data => OnStateChange(this, data.GetValue<StateOutput>()));
-                _socket.On("playlist-created", data => OnPlaylistCreated(this, data.GetValue<PlaylistOutput>()));
-                _socket.On("playlist-delete", data => OnPlaylistDeleted(this, data.GetValue<string>()));
+                // _socket = new SocketIOClient.SocketIO($"http://{Settings.Host}:{Settings.Port}{Endpoints.Realtime}", new SocketIOOptions
+                // {
+                // Transport = TransportProtocol.WebSocket,
+                // Auth = Settings.Token
+                // });
+
+                _client.Connected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Connected);
+                _client.Disconnected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Disconnected);
+                _client.ExceptionOccurred += (sender, args) => OnError(sender ?? this, args.Exception);
+                _client.ErrorReceived += (sender, args) => OnError(sender ?? this, new Exception(args.ToString()));
+                _client.On<StateOutput>("state-update", data => OnStateChange(this, data));
+                _client.On<PlaylistOutput>("playlist-created", data => OnPlaylistCreated(this, data));
+                _client.On<string>("playlist-delete", data => OnPlaylistDeleted(this, data));
             }
             catch (Exception ex)
             {
