@@ -9,7 +9,8 @@
       "prerelease": false,
       "include-component-in-tag": false,
       "extra-files": [
-        "YTMDesktopCompanion/YTMDesktopCompanion.csproj"
+        "YTMDesktopCompanion/YTMDesktopCompanion.csproj",
+        "YTMDesktopCompanion/Properties/AssemblyInfo.cs"
       ]
     }
   },

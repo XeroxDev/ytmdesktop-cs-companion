@@ -22,31 +22,19 @@
 
 #region
 
-using System.Text.Json.Serialization;
-using XeroxDev.YTMDesktop.Companion.Constants;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 #endregion
 
-namespace XeroxDev.YTMDesktop.Companion.Models.Output
-{
-    /// <summary>
-    ///     This class is the output from the <see cref="Endpoints.Playlists" /> endpoint. (as a single item, the endpoint will return an array of this)
-    /// </summary>
-    [JsonSerializable(typeof(PlaylistOutput))]
-    public class PlaylistOutput
-    {
-        /// <summary>
-        ///     The playlist id
-        /// </summary>
-        [JsonPropertyName("id")]
-        [JsonRequired]
-        public string Id { get; set; } = null;
-
-        /// <summary>
-        ///     The playlist title
-        /// </summary>
-        [JsonPropertyName("title")]
-        [JsonRequired]
-        public string Title { get; set; } = null;
-    }
-}
+[assembly: AssemblyTitle("XeroxDev.YTMDesktop.Companion")]
+[assembly: AssemblyDescription("A library to control the YTMDesktop App")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("XeroxDev")]
+[assembly: AssemblyProduct("XeroxDev.YTMDesktop.Companion")]
+[assembly: AssemblyCopyright("")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("en")]
+[assembly: ComVisible(false)]
+[assembly: Guid("749F5EBA-0CFB-4F3A-84A7-9D0E288620D2")]
+[assembly: AssemblyVersion("1.0.0")] // x-release-please-version

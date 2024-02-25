@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <ImplicitUsings>disable</ImplicitUsings>
         <RootNamespace>XeroxDev.YTMDesktop.Companion</RootNamespace>
         <PackageId>XeroxDev.YTMDesktop.Companion</PackageId>
         <AssemblyName>XeroxDev.YTMDesktop.Companion</AssemblyName>
@@ -21,10 +20,7 @@
         <RepositoryUrl>https://github.com/XeroxDev/ytmdesktop-cs-companion</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>library dotnet csharp ytmdesktop companion-server</PackageTags>
-        <PackageReleaseNotes>
-            Please see the CHANGELOG.md file for release notes. You can find the CHANGELOG.md file at https://github.com/XeroxDev/ytmdesktop-cs-companion/blob/main/CHANGELOG.md
-            For more information and documentation, please visit the project page at https://github.com/XeroxDev/ytmdesktop-cs-companion
-        </PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/XeroxDev/ytmdesktop-cs-companion/blob/main/CHANGELOG.md</PackageReleaseNotes>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -33,15 +29,21 @@
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
         <NeutralLanguage>en</NeutralLanguage>
         <AssemblyOriginatorKeyFile>XeroxDev.YTMDesktop.Companion.snk</AssemblyOriginatorKeyFile>
-        <TargetFrameworks>net7.0;net7.0-windows;net8.0;net8.0-windows</TargetFrameworks>
+        <TargetFrameworks>net6.0;net6.0-windows;net7.0;net7.0-windows;net8.0;net8.0-windows;netstandard2.0;netstandard2.1;net472;net48;net481</TargetFrameworks>
+        <LangVersion>7.3</LangVersion>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+        <ProjectGuid>749F5EBA-0CFB-4F3A-84A7-9D0E288620D2</ProjectGuid>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="NuGet.Versioning" Version="6.9.1"/>
         <PackageReference Include="SocketIOClient" Version="3.1.1"/>
         <PackageReference Include="SocketIOClient.Windows7" Version="3.1.1"/>
+        <PackageReference Include="System.Net.Http" Version="4.3.4"/>
+        <PackageReference Include="System.Net.Http.Json" Version="8.0.0"/>
     </ItemGroup>
-    
+
     <ItemGroup>
         <None Include="../README.md">
             <Pack>true</Pack>

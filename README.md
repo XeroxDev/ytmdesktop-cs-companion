@@ -4,6 +4,7 @@ This is a library for the YTMDesktop Companion Server which lets you easier comm
 authorization and so on.
 
 ## Table of contents
+
 <!-- toc -->
 
 - [Badges](#badges)
@@ -24,7 +25,6 @@ authorization and so on.
 ![Version](https://img.shields.io/nuget/v/XeroxDev.YTMDesktop.Companion?style=for-the-badge) ![Downloads](https://img.shields.io/nuget/dt/XeroxDev.YTMDesktop.Companion?style=for-the-badge)
 
 [![Awesome Badges](https://img.shields.io/badge/badges-awesome-green?style=for-the-badge)](https://shields.io)
-
 
 ## Installation
 
