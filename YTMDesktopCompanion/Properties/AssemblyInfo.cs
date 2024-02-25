@@ -37,4 +37,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("en")]
 [assembly: ComVisible(false)]
 [assembly: Guid("749F5EBA-0CFB-4F3A-84A7-9D0E288620D2")]
-[assembly: AssemblyVersion("1.0.0")] // x-release-please-version
+[assembly: AssemblyVersion("1.1.0")] // x-release-please-version
