@@ -22,7 +22,8 @@
 
 #region
 
-using System.Text.Json.Serialization;
+
+using Newtonsoft.Json;
 using XeroxDev.YTMDesktop.Companion.Enums;
 
 #endregion
@@ -32,7 +33,6 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Input
     /// <summary>
     ///     The input for the command endpoint.
     /// </summary>
-    [JsonSerializable(typeof(CommandInput))]
     public class CommandInput
     {
         /// <summary>
@@ -55,12 +55,17 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Input
         {
         }
 
-        [JsonPropertyName("command")]
+        /// <summary>
+        ///    The command to execute
+        /// </summary>
+        [JsonProperty("command")]
         [JsonRequired]
         public string Command { get; set; }
 
-        [JsonPropertyName("data")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        /// <summary>
+        ///   The data to send with
+        /// </summary>
+        [JsonProperty("data")]
         public object Data { get; set; }
     }
 }

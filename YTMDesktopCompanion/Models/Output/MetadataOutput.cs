@@ -23,7 +23,7 @@
 #region
 
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using XeroxDev.YTMDesktop.Companion.Constants;
 
 #endregion
@@ -38,7 +38,7 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Output
         /// <summary>
         ///     All available API version.
         /// </summary>
-        [JsonPropertyName("apiVersions")]
+        [JsonProperty("apiVersions")]
         [JsonRequired]
         public List<string> ApiVersions { get; set; } = null;
     }

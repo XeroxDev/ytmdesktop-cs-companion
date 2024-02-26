@@ -27,21 +27,84 @@ namespace XeroxDev.YTMDesktop.Companion.Enums
     /// </summary>
     public enum ECommand
     {
+        /// <summary>
+        ///    Play or pause the current song.
+        /// </summary>
         PlayPause,
+
+        /// <summary>
+        ///   Play the current song.
+        /// </summary>
         Play,
+
+        /// <summary>
+        ///  Pause the current song.
+        /// </summary>
         Pause,
+
+        /// <summary>
+        /// Stop the current song.
+        /// </summary>
         VolumeUp,
+
+        /// <summary>
+        /// Decrease the volume.
+        /// </summary>
         VolumeDown,
+
+        /// <summary>
+        /// Set the volume to a specific value.
+        /// </summary>
         SetVolume,
+
+        /// <summary>
+        /// Mute the volume.
+        /// </summary>
         Mute,
+
+        /// <summary>
+        /// Unmute the volume.
+        /// </summary>
         Unmute,
+
+        /// <summary>
+        /// Seek to a specific time in the song.
+        /// </summary>
         SeekTo,
+
+        /// <summary>
+        /// Skip to the next song.
+        /// </summary>
         Next,
+
+        /// <summary>
+        /// Skip to the previous song.
+        /// </summary>
         Previous,
+
+        /// <summary>
+        /// Repeat the current song.
+        /// </summary>
         RepeatMode,
+
+        /// <summary>
+        /// Shuffle the queue.
+        /// </summary>
         Shuffle,
+
+        /// <summary>
+        /// Add a song to the queue.
+        /// </summary>
         PlayQueueIndex,
+
+        /// <summary>
+        /// Remove a song from the queue.
+        /// </summary>
         ToggleLike,
+
+        /// <summary>
+        /// Remove a song from the queue.
+        /// </summary>
         ToggleDislike
     }
 

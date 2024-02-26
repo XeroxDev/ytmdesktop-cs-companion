@@ -23,8 +23,13 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using H.Socket.IO;
+using Newtonsoft.Json;
+using SocketIOClient;
+using SocketIOClient.Newtonsoft.Json;
+using SocketIOClient.Transport;
+using XeroxDev.YTMDesktop.Companion.Constants;
 using XeroxDev.YTMDesktop.Companion.Enums;
 using XeroxDev.YTMDesktop.Companion.Interfaces;
 using XeroxDev.YTMDesktop.Companion.Models.Output;
@@ -34,6 +39,9 @@ using XeroxDev.YTMDesktop.Companion.Settings;
 
 namespace XeroxDev.YTMDesktop.Companion.Clients
 {
+    /// <summary>
+    ///    The socket client for the YTMDesktop Companion
+    /// </summary>
     public class SocketClient : IGenericClient
     {
         private ConnectorSettings _settings;
@@ -41,8 +49,12 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
         /// <summary>
         ///     The socket client
         /// </summary>
-        private SocketIoClient _client;
+        private SocketIO _client;
 
+        /// <summary>
+        ///    The socket client for the YTMDesktop Companion
+        /// </summary>
+        /// <param name="settings">The settings for the socket client.</param>
         public SocketClient(ConnectorSettings settings)
         {
             _settings = settings;
@@ -91,7 +103,7 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
         ///     Useful for custom things that are not implemented in the library yet.
         /// </summary>
         /// <returns>The socket object</returns>
-        public SocketIoClient GetClient()
+        public SocketIO GetClient()
         {
             return _client;
         }
@@ -113,21 +125,29 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
 
                 OnConnectionChange(this, ESocketState.Connecting);
 
-                _client = new SocketIoClient();
+                _client = new SocketIO($"http://{Settings.Host}:{Settings.Port}{Endpoints.Realtime}", new SocketIOOptions
+                {
+                    Transport = TransportProtocol.WebSocket,
+                    Auth = new Dictionary<string, string> { { "token", Settings.Token } }
+                });
+                _client.JsonSerializer = new NewtonsoftJsonSerializer(new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    DefaultValueHandling = DefaultValueHandling.Ignore
+                });
 
-                // _socket = new SocketIOClient.SocketIO($"http://{Settings.Host}:{Settings.Port}{Endpoints.Realtime}", new SocketIOOptions
-                // {
-                // Transport = TransportProtocol.WebSocket,
-                // Auth = Settings.Token
-                // });
+                _client.OnConnected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Connected);
+                _client.OnDisconnected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Disconnected);
+                _client.OnError += (sender, args) => OnError(sender ?? this, new Exception(args));
+                _client.OnReconnectError += (sender, args) => OnError(sender ?? this, args);
+                _client.OnReconnectFailed += (sender, args) => OnConnectionChange(sender ?? this, ESocketState.Disconnected);
+                _client.OnReconnected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Connected);
+                _client.OnReconnectAttempt += (sender, args) => OnConnectionChange(sender ?? this, ESocketState.Connecting);
+                _client.On("state-update", data => OnStateChange(this, data.GetValue<StateOutput>()));
+                _client.On("playlist-created", data => OnPlaylistCreated(this, data.GetValue<PlaylistOutput>()));
+                _client.On("playlist-delete", data => OnPlaylistDeleted(this, data.GetValue<string>()));
 
-                _client.Connected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Connected);
-                _client.Disconnected += (sender, _) => OnConnectionChange(sender ?? this, ESocketState.Disconnected);
-                _client.ExceptionOccurred += (sender, args) => OnError(sender ?? this, args.Exception);
-                _client.ErrorReceived += (sender, args) => OnError(sender ?? this, new Exception(args.ToString()));
-                _client.On<StateOutput>("state-update", data => OnStateChange(this, data));
-                _client.On<PlaylistOutput>("playlist-created", data => OnPlaylistCreated(this, data));
-                _client.On<string>("playlist-delete", data => OnPlaylistDeleted(this, data));
+                await _client.ConnectAsync();
             }
             catch (Exception ex)
             {

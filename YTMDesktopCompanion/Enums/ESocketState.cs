@@ -22,6 +22,9 @@
 
 namespace XeroxDev.YTMDesktop.Companion.Enums
 {
+    /// <summary>
+    ///    The state of the socket
+    /// </summary>
     public enum ESocketState
     {
         /// <summary>

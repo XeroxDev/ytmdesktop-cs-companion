@@ -22,7 +22,8 @@
 
 #region
 
-using System.Text.Json.Serialization;
+
+using Newtonsoft.Json;
 
 #endregion
 
@@ -31,34 +32,37 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Output
     /// <summary>
     ///     This class is used to represent the error output of the API.
     /// </summary>
-    [JsonSerializable(typeof(ErrorOutput))]
     public class ErrorOutput
     {
         /// <summary>
         ///     The status code of the error. (e.g. 403)
         /// </summary>
-        [JsonPropertyName("statusCode")]
+        [JsonProperty("statusCode")]
         public int? StatusCode { get; set; }
 
         /// <summary>
         ///     An error code with specific information about the error (e.g. AUTHORIZATION_DISABLED)<br />
         ///     It is not always available.
         /// </summary>
-        [JsonPropertyName("code")]
+        [JsonProperty("code")]
         public string Code { get; set; }
 
         /// <summary>
         ///     The error message title. (e.g. Forbidden)
         /// </summary>
-        [JsonPropertyName("error")]
+        [JsonProperty("error")]
         public string Error { get; set; }
 
         /// <summary>
         ///     The error message. (e.g. Authorization requests are disabled)
         /// </summary>
-        [JsonPropertyName("message")]
+        [JsonProperty("message")]
         public string Message { get; set; }
 
+        /// <summary>
+        ///    Returns a string that represents the current object.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"Status Code: {StatusCode}\nCode: {Code}\nError: {Error}\nMessage: {Message}";

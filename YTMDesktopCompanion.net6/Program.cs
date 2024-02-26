@@ -20,18 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#region
-
-using System.Reflection;
-using System.Text.Json;
-using XeroxDev.YTMDesktop.Companion;
-using XeroxDev.YTMDesktop.Companion.Settings;
-
-#endregion
-
 #region Setup
 
 // Set YOUR version (or fetch them from anywhere)
+using Newtonsoft.Json;
+using XeroxDev.YTMDesktop.Companion;
+using XeroxDev.YTMDesktop.Companion.Settings;
+
 var version = "1.0.0";
 
 // Check if file ".token" exists
@@ -75,7 +70,7 @@ if (metadata is null)
     return;
 }
 
-Console.WriteLine(JsonSerializer.Serialize(metadata));
+Console.WriteLine(JsonConvert.SerializeObject(metadata, Formatting.Indented));
 
 // Example Rest Client usage
 
@@ -111,7 +106,7 @@ if (string.IsNullOrWhiteSpace(token))
 
 // Get the current state and print it
 var state = await restClient.GetState();
-Console.WriteLine(JsonSerializer.Serialize(state));
+Console.WriteLine(JsonConvert.SerializeObject(state, Formatting.Indented));
 
 // Pause current track
 await restClient.Pause();
@@ -131,8 +126,8 @@ await restClient.Play();
 // Register events
 socketClient.OnError += (sender, args) => Console.WriteLine($"Error: {args.Message}");
 socketClient.OnConnectionChange += (sender, args) => Console.WriteLine($"Connection changed: {args}");
-socketClient.OnStateChange += (sender, args) => Console.WriteLine(JsonSerializer.Serialize(args));
-socketClient.OnPlaylistCreated += (sender, args) => Console.WriteLine(JsonSerializer.Serialize(args));
+socketClient.OnStateChange += (sender, args) => Console.WriteLine(JsonConvert.SerializeObject(args, Formatting.Indented));
+socketClient.OnPlaylistCreated += (sender, args) => Console.WriteLine(JsonConvert.SerializeObject(args, Formatting.Indented));
 socketClient.OnPlaylistDeleted += (sender, args) => Console.WriteLine($"Playlist deleted: {args}");
 
 // Connect to the server

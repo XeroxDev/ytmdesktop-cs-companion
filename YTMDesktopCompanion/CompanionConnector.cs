@@ -36,6 +36,10 @@ namespace XeroxDev.YTMDesktop.Companion
     /// </summary>
     public class CompanionConnector
     {
+        /// <summary>
+        ///    The companion connector. This class is the main class of the library. It contains the rest and socket client.<br />
+        /// </summary>
+        /// <param name="settings">The settings for the rest and socket clients.</param>
         public CompanionConnector(ConnectorSettings settings)
         {
             RestClient = new RestClient(settings);

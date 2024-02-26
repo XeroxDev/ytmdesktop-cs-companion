@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <ImplicitUsings>disable</ImplicitUsings>
         <RootNamespace>XeroxDev.YTMDesktop.Companion</RootNamespace>
         <PackageId>XeroxDev.YTMDesktop.Companion</PackageId>
         <AssemblyName>XeroxDev.YTMDesktop.Companion</AssemblyName>
         <Title>YTMDesktopCompanion</Title>
         <Authors>XeroxDev</Authors>
         <Description>This library will help you communicate with the YTMDesktop Companion Server.</Description>
+        <Company>XeroxDev</Company>
+        <Product>XeroxDev.YTMDesktop.Companion</Product>
         <!-- x-release-please-start-version -->
         <AssemblyVersion>1.1.0</AssemblyVersion>
         <FileVersion>1.1.0</FileVersion>
@@ -28,18 +29,16 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
         <NeutralLanguage>en</NeutralLanguage>
-        <AssemblyOriginatorKeyFile>XeroxDev.YTMDesktop.Companion.snk</AssemblyOriginatorKeyFile>
-        <TargetFrameworks>net6.0;netstandard2.0;net472</TargetFrameworks>
+        <TargetFrameworks>net6.0;net472</TargetFrameworks>
         <LangVersion>7.3</LangVersion>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
         <ProjectGuid>{749F5EBA-0CFB-4F3A-84A7-9D0E288620D2}</ProjectGuid>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="H.Socket.IO" Version="1.2.*"/>
-        <PackageReference Include="System.Text.Json" Version="8.0.*"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="SocketIOClient" Version="3.0.8" />
+        <PackageReference Include="SocketIOClient.Newtonsoft.Json" Version="3.0.7"/>
     </ItemGroup>
 
     <ItemGroup>

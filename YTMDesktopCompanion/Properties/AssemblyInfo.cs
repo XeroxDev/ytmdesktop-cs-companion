@@ -19,31 +19,3 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
-#region
-
-using XeroxDev.YTMDesktop.Companion.Settings;
-
-#endregion
-
-namespace XeroxDev.YTMDesktop.Companion.Interfaces
-{
-    /// <summary>
-    ///    The generic client interface
-    /// </summary>
-    public interface IGenericClient
-    {
-        /// <summary>
-        ///    The settings for the client
-        /// </summary>
-        ConnectorSettings Settings { get; set; }
-
-        /// <summary>
-        ///     Set the authentication token, so it can be used for further requests.<br />
-        ///     We <b>recommend</b> to use the <see cref="CompanionConnector.SetAuthToken" /> method in the
-        ///     <see cref="CompanionConnector" /> class instead of this method because it also reconnects the socket client if the token changed.
-        /// </summary>
-        /// <param name="token">The token to set</param>
-        void SetAuthToken(string token);
-    }
-}

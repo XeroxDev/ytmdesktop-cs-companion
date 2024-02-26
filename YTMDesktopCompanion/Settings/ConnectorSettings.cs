@@ -29,6 +29,9 @@ using System.Text.RegularExpressions;
 
 namespace XeroxDev.YTMDesktop.Companion.Settings
 {
+    /// <summary>
+    ///    The settings for the connector.
+    /// </summary>
     public class ConnectorSettings
     {
         private string _appId;

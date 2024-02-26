@@ -24,8 +24,6 @@
 
 using System;
 using System.IO;
-using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
 using XeroxDev.YTMDesktop.Companion;
 using XeroxDev.YTMDesktop.Companion.Settings;
@@ -90,7 +88,7 @@ namespace YTMDesktopCompanion.net472
                 return;
             }
 
-            Console.WriteLine(JsonSerializer.Serialize(metadata));
+            Console.WriteLine(metadata.ToString());
 
             // Example Rest Client usage
 
@@ -126,7 +124,7 @@ namespace YTMDesktopCompanion.net472
 
             // Get the current state and print it
             var state = await restClient.GetState();
-            Console.WriteLine(JsonSerializer.Serialize(state));
+            Console.WriteLine(state.ToString());
 
             // Pause current track
             await restClient.Pause();
@@ -146,8 +144,8 @@ namespace YTMDesktopCompanion.net472
             // Register events
             socketClient.OnError += (sender, args) => Console.WriteLine($"Error: {args.Message}");
             socketClient.OnConnectionChange += (sender, args) => Console.WriteLine($"Connection changed: {args}");
-            socketClient.OnStateChange += (sender, args) => Console.WriteLine(JsonSerializer.Serialize(args));
-            socketClient.OnPlaylistCreated += (sender, args) => Console.WriteLine(JsonSerializer.Serialize(args));
+            socketClient.OnStateChange += (sender, args) => Console.WriteLine(args.ToString());
+            socketClient.OnPlaylistCreated += (sender, args) => Console.WriteLine(args.ToString());
             socketClient.OnPlaylistDeleted += (sender, args) => Console.WriteLine($"Playlist deleted: {args}");
 
             // Connect to the server

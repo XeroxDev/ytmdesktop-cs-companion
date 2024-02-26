@@ -24,8 +24,8 @@
 
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using XeroxDev.YTMDesktop.Companion.Constants;
 using XeroxDev.YTMDesktop.Companion.Enums;
 using XeroxDev.YTMDesktop.Companion.Exceptions;
@@ -158,7 +158,7 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
                 if (token != null) request.Headers.Add("Authorization", token);
                 try
                 {
-                    request.Content = new StringContent(JsonSerializer.Serialize(body), System.Text.Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(JsonConvert.SerializeObject(body), System.Text.Encoding.UTF8, "application/json");
                 }
                 catch (Exception e)
                 {
@@ -190,7 +190,7 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
 
             if (!response.IsSuccessStatusCode)
             {
-                var error = JsonSerializer.Deserialize<ErrorOutput>(content);
+                var error = JsonConvert.DeserializeObject<ErrorOutput>(content);
                 if (error == null)
                 {
                     throw new ApiException(new ErrorOutput
@@ -212,7 +212,7 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
             // Try parsing the response to ErrorOutput, if it's successful, throw an ApiException
             try
             {
-                var errorOutput = JsonSerializer.Deserialize<ErrorOutput>(content);
+                var errorOutput = JsonConvert.DeserializeObject<ErrorOutput>(content);
                 if (errorOutput?.Error != null && errorOutput.Message != null && errorOutput.StatusCode != null && errorOutput.Code != null) throw new ApiException(errorOutput);
             }
             catch (Exception e)
@@ -220,7 +220,7 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
                 if (e is ApiException) throw;
             }
 
-            return JsonSerializer.Deserialize<TResponse>(content);
+            return JsonConvert.DeserializeObject<TResponse>(content);
         }
 
         #region Commands

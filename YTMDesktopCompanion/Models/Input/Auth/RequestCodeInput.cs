@@ -23,8 +23,9 @@
 #region
 
 using System;
-using System.Text.Json.Serialization;
+
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 #endregion
 
@@ -33,7 +34,6 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Input.Auth
     /// <summary>
     ///     The input for the request code endpoint.
     /// </summary>
-    [JsonSerializable(typeof(RequestCodeInput))]
     public class RequestCodeInput
     {
         private string _appId;
@@ -62,7 +62,7 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Input.Auth
         ///     The id of your app. Must be all lowercase with only alphanumeric characters, no spaces and between 2 and 32 characters.<br />
         ///     <b>Regex</b>: <c>^[a-z0-9_\\-]{2,32}$</c>
         /// </summary>
-        [JsonPropertyName("appId")]
+        [JsonProperty("appId")]
         [JsonRequired]
         public string AppId
         {
@@ -79,7 +79,7 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Input.Auth
         /// <summary>
         ///     The name of your app. Must be between 2 and 48 characters.
         /// </summary>
-        [JsonPropertyName("appName")]
+        [JsonProperty("appName")]
         [JsonRequired]
         public string AppName
         {
@@ -98,7 +98,7 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Input.Auth
         /// <summary>
         ///     The version of your app. Must be semantic versioning compatible.
         /// </summary>
-        [JsonPropertyName("appVersion")]
+        [JsonProperty("appVersion")]
         [JsonRequired]
         public string AppVersion { get; set; }
     }

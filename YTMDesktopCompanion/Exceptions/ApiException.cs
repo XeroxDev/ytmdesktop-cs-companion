@@ -35,21 +35,43 @@ namespace XeroxDev.YTMDesktop.Companion.Exceptions
     [Serializable]
     public class ApiException : Exception
     {
+        /// <summary>
+        ///    Represents an exception that is thrown when an API error occurs.
+        /// </summary>
+        /// <param name="error">The error output from the API.</param>
         public ApiException(ErrorOutput error) : this(null, null, error)
         {
         }
 
+        /// <summary>
+        ///   Represents an exception that is thrown when an API error occurs.
+        /// </summary>
+        /// <param name="message">The error message.</param>
+        /// <param name="error">The error output from the API.</param>
         public ApiException(string message, ErrorOutput error) : this(message, null, error)
         {
         }
 
+        /// <summary>
+        ///   Represents an exception that is thrown when an API error occurs.
+        /// </summary>
+        /// <param name="message">The error message.</param>
+        /// <param name="innerException">The inner exception.</param>
+        /// <param name="error">The error output from the API.</param>
         public ApiException(string message, Exception innerException, ErrorOutput error) : base(message, innerException)
         {
             Error = error;
         }
 
+        /// <summary>
+        ///    The error output from the API.
+        /// </summary>
         public ErrorOutput Error { get; }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"{base.ToString()}\n=========\nAPI Error\n=========\n{Error}";
