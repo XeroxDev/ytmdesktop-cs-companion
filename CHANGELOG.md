@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/XeroxDev/ytmdesktop-cs-companion/compare/v1.1.1...v1.1.2) (2024-02-28)
+
+
+### Bug Fixes
+
+* remove net framework support because it's not working ([109d532](https://github.com/XeroxDev/ytmdesktop-cs-companion/commit/109d532db443ac74c3096c3e41771491b9d2a056))
+
 ## [1.1.1](https://github.com/XeroxDev/ytmdesktop-cs-companion/compare/v1.1.0...v1.1.1) (2024-02-26)
 
 
