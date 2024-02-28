@@ -1,4 +1,4 @@
-﻿// This file is part of the YTMDesktopCompanion.Example project.
+﻿// This file is part of the YTMDesktopCompanion.Example.NET8 project.
 // 
 // Copyright (c) 2024 Dominic Ris
 // 

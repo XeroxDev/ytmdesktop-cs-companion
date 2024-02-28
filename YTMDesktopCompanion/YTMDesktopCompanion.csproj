@@ -29,7 +29,7 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
         <NeutralLanguage>en</NeutralLanguage>
-        <TargetFrameworks>net6.0;net472</TargetFrameworks>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
         <LangVersion>7.3</LangVersion>
         <ProjectGuid>{749F5EBA-0CFB-4F3A-84A7-9D0E288620D2}</ProjectGuid>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>

@@ -32,7 +32,7 @@ TODO: Add installation instructions
 
 ## Usage
 
-Can be easier seen in the [example file](https://github.com/XeroxDev/ytmdesktop-cs-companion/blob/main/YTMDesktopCompanion.Example/Program.cs)
+Can be easier seen in the [example file](https://github.com/XeroxDev/ytmdesktop-cs-companion/blob/main/YTMDesktopCompanion.Example.NET6/Program.cs)
 Also you can look through the [documentation](https://xeroxdev.github.io/ytmdesktop-cs-companion/) but here's a quick rundown:
 
 ```csharp
@@ -43,7 +43,7 @@ using XeroxDev.YTMDesktop.Companion;
 using XeroxDev.YTMDesktop.Companion.Settings;
 
 // Set YOUR version (or fetch them from anywhere) I will use a static version for this example 
-var version = SemanticVersion.Parse("1.0.0");
+var version = "1.0.0"
 
 // Define settings (add token if you have one, see bigger example for how this could be done)
 var settings = new ConnectorSettings(
