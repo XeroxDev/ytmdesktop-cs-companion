@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/XeroxDev/ytmdesktop-cs-companion/compare/v1.1.2...v1.2.0) (2025-01-17)
+
+
+### Features
+
+* **Rest:** add change video command ([ebff4c9](https://github.com/XeroxDev/ytmdesktop-cs-companion/commit/ebff4c98e17b9c262595e9948f396f1d48909f73))
+
+
+### Bug Fixes
+
+* **TrackState:** remove require state for playlistId ([ebff4c9](https://github.com/XeroxDev/ytmdesktop-cs-companion/commit/ebff4c98e17b9c262595e9948f396f1d48909f73))
+
 ## [1.1.2](https://github.com/XeroxDev/ytmdesktop-cs-companion/compare/v1.1.1...v1.1.2) (2024-02-28)
 
 
