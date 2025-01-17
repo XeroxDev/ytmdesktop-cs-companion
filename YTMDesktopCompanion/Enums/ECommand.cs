@@ -105,7 +105,12 @@ namespace XeroxDev.YTMDesktop.Companion.Enums
         /// <summary>
         /// Remove a song from the queue.
         /// </summary>
-        ToggleDislike
+        ToggleDislike,
+        
+        /// <summary>
+        /// Change the video.
+        /// </summary>
+        ChangeVideo
     }
 
     /// <summary>

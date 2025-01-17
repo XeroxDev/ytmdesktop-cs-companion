@@ -53,7 +53,6 @@ namespace XeroxDev.YTMDesktop.Companion.Models.Output
         ///     The playlist id
         /// </summary>
         [JsonProperty("playlistId")]
-        [JsonRequired]
         public string PlaylistId { get; set; } = null;
     }
 

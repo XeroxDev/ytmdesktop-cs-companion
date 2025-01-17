@@ -373,6 +373,30 @@ namespace XeroxDev.YTMDesktop.Companion.Clients
             await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.ToggleDislike), Settings.Token);
         }
 
+        /// <summary>
+        ///    Change the video. Either videoId or playlistId or both have to be set. You can also set an url instead. Url is prioritized over videoId and playlistId
+        /// </summary>
+        /// <param name="videoId">The video id from the video to play</param>
+        /// <param name="playlistId">The playlist id from the playlist to play</param>
+        /// <param name="url">The url to play</param>
+        /// <exception cref="ArgumentNullException">Thrown when videoId and playlistId are null</exception>
+        /// <exception cref="ApiException">Thrown when an error occurred while sending the request. Error is either from the server or from the client</exception>
+        public async Task ChangeVideo(string videoId = null, string playlistId = null, string url = null)
+        {
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                var queries = System.Web.HttpUtility.ParseQueryString(new Uri(url).Query);
+                videoId = queries.Get("v");
+                playlistId = queries.Get("list");
+            }
+
+            if (string.IsNullOrWhiteSpace(videoId) && string.IsNullOrWhiteSpace(playlistId) && string.IsNullOrWhiteSpace(url))
+                throw new ApiException("videoId, playlistId and url cannot be empty. At least one of them have to be set",
+                    new ErrorOutput { StatusCode = 400, Error = "Bad Request", Message = "videoId, playlistId and url cannot be empty. At least one of them have to be set" });
+
+            await SendPostRequest<object, CommandInput>(Endpoints.Command, new CommandInput(ECommand.ChangeVideo, new { videoId, playlistId }), Settings.Token);
+        }
+
         #endregion
     }
 }

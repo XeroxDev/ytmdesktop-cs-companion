@@ -28,7 +28,11 @@ authorization and so on.
 
 ## Installation
 
-TODO: Add installation instructions
+Install via NuGet:
+
+```bash
+dotnet add package XeroxDev.YTMDesktop.Companion
+```
 
 ## Usage
 

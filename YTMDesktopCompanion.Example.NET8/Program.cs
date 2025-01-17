@@ -117,6 +117,11 @@ await Task.Delay(2000);
 // Resume current track
 await restClient.Play();
 
+await Task.Delay(2000);
+
+// Change to another track
+await restClient.ChangeVideo(videoId: "xvFZjo5PgG0");
+
 #endregion
 
 #region SocketClient
